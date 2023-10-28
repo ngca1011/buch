@@ -19,7 +19,7 @@ import process from 'node:process';
 import scanner from 'sonarqube-scanner';
 
 // Umgebungsvariable aus .env einlesen
-dotenv.config();
+dotenv.config({ path: '.env.STUDENT' });
 const sonarToken = process.env.SONAR_TOKEN;
 
 scanner(

@@ -14,7 +14,7 @@ src/config/resources/jwt/private-key.pem
 src/config/resources/tls/private-key.pem
 .depcheckrc.yml
 .editorconfig
-.env.STUDENT
+#.env.STUDENT
 .eslint*
 .git*
 .hadolint.yaml

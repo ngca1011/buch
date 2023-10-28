@@ -127,7 +127,7 @@ LABEL org.opencontainers.image.title="buch" \
 
 WORKDIR /opt/app
 
-COPY --chown=nonroot:nonroot package.json .env ./
+COPY --chown=nonroot:nonroot package.json .env.STUDENT ./
 COPY --from=deps --chown=nonroot:nonroot /home/node/node_modules ./node_modules
 COPY --from=builder --chown=nonroot:nonroot /home/node/dist ./dist
 COPY --chown=nonroot:nonroot src/config/resources ./dist/config/resources
