@@ -18,7 +18,7 @@
 - Top-level await statt IIFE
   - src\server.ts
   - src\shared\db\mongoDB.ts
-  - src\buch\rest\buch-file.request-handler.ts
+  - src\film\rest\film-file.request-handler.ts
 - Jest
   - https://jestjs.io/docs/ecmascript-modules
   - ts-jest

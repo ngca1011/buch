@@ -37,7 +37,7 @@ $host.ui.RawUI.WindowTitle = 'dive'
 
 $diveVersion = 'v0.11.0'
 $imagePrefix = 'juergenzimmermann/'
-$imageBase = 'buch'
+$imageBase = 'film'
 $imageTag = "2023.10.0-$base"
 $image = "$imagePrefix${imageBase}:$imageTag"
 

@@ -9,7 +9,7 @@
 			"name": "Query",
 			"item": [
 				{
-					"name": "Suche isbn, version, art und titel vom Buch mit ID 1",
+					"name": "Suche isbn, version, art und titel vom Film mit ID 1",
 					"event": [
 						{
 							"listen": "test",
