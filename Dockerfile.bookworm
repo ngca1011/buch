@@ -46,10 +46,25 @@ RUN <<EOF
 set -ex
 apt-get update
 apt-get upgrade
-# Python 3.12 enthaelt nicht mehr "distutils" fuer "node-gyp"
+
+# Debian Bookworm bietet nur Packages fuer Python 3.11; Ubuntu Jammy LTS nur fuer Python 3.10
 apt-get install --no-install-recommends --yes python3.11=3.11.2-6 python3.11-dev=3.11.2-6 build-essential=12.9
 ln -s /usr/bin/python3.11 /usr/bin/python3
 ln -s /usr/bin/python3.11 /usr/bin/python
+
+# Python 3.12: Uebersetzung des Python-Quellcodes erforderlich !!!
+# https://itnixpro.com/how-to-install-python-3-12-on-debian-12debian-11
+#apt-get install --no-install-recommends --yes libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev wget build-essential libreadline-dev
+#wget --no-check-certificate https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tar.xz
+#tar -xvf Python-3.12.0.tar.xz
+#cd Python-3.12.0
+#./configure --enable-optimizations
+#make altinstall
+#ln -s /usr/bin/python3.12 /usr/bin/python3
+#ln -s /usr/bin/python3.12 /usr/bin/python
+#python -m pip install --upgrade pip
+#pip install setuptools
+
 npm i -g --no-audit --no-fund npm
 EOF
 
@@ -60,79 +75,79 @@ WORKDIR /home/node
 COPY package.json package-lock.json nest-cli.json tsconfig*.json ./
 COPY src ./src
 
-RUN <<EOF
-# ci (= clean install) mit package-lock.json
-npm ci --no-audit --no-fund
-npm run build
-EOF
+# RUN <<EOF
+# # ci (= clean install) mit package-lock.json
+# npm ci --no-audit --no-fund
+# npm run build
+# EOF
 
-# ------------------------------------------------------------------------------
-# S t a g e   D e p s
-# ------------------------------------------------------------------------------
-FROM node:${NODE_VERSION}-bookworm-slim AS deps
+# # ------------------------------------------------------------------------------
+# # S t a g e   D e p s
+# # ------------------------------------------------------------------------------
+# FROM node:${NODE_VERSION}-bookworm-slim AS deps
 
-RUN <<EOF
-set -ex
-apt-get update
-apt-get upgrade
-apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6 python3.11-dev=3.11.2-6 build-essential=12.9
-ln -s /usr/bin/python3.11 /usr/bin/python3
-ln -s /usr/bin/python3.11 /usr/bin/python
-npm i -g --no-audit --no-fund npm
-EOF
+# RUN <<EOF
+# set -ex
+# apt-get update
+# apt-get upgrade
+# apt-get install --no-install-recommends --yes python3.11-minimal=3.11.2-6 python3.11-dev=3.11.2-6 build-essential=12.9
+# ln -s /usr/bin/python3.11 /usr/bin/python3
+# ln -s /usr/bin/python3.11 /usr/bin/python
+# npm i -g --no-audit --no-fund npm
+# EOF
 
-WORKDIR /home/node
+# WORKDIR /home/node
 
-USER node
+# USER node
 
-COPY --chown=node:node package.json package-lock.json ./
+# COPY --chown=node:node package.json package-lock.json ./
 
-# ci (= clean install) mit package-lock.json
-# --omit dev: ohne devDependencies
-RUN npm ci --omit dev --no-audit --no-fund
+# # ci (= clean install) mit package-lock.json
+# # --omit dev: ohne devDependencies
+# RUN npm ci --omit dev --no-audit --no-fund
 
-# ------------------------------------------------------------------------------
-# S t a g e   F i n a l
-# ------------------------------------------------------------------------------
-FROM node:${NODE_VERSION}-bookworm-slim
+# # ------------------------------------------------------------------------------
+# # S t a g e   F i n a l
+# # ------------------------------------------------------------------------------
+# FROM node:${NODE_VERSION}-bookworm-slim
 
-# Anzeige bei "docker inspect ..."
-# https://specs.opencontainers.org/image-spec/annotations
-# https://spdx.org/licenses
-# MAINTAINER ist deprecated https://docs.docker.com/engine/reference/builder/#maintainer-deprecated
-LABEL org.opencontainers.image.title="buch" \
-  org.opencontainers.image.description="Appserver buch mit Basis-Image Debian Bookworm" \
-  org.opencontainers.image.version="2023.10.0-bookworm" \
-  org.opencontainers.image.licenses="GPL-3.0-or-later" \
-  org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
+# # Anzeige bei "docker inspect ..."
+# # https://specs.opencontainers.org/image-spec/annotations
+# # https://spdx.org/licenses
+# # MAINTAINER ist deprecated https://docs.docker.com/engine/reference/builder/#maintainer-deprecated
+# LABEL org.opencontainers.image.title="buch" \
+#   org.opencontainers.image.description="Appserver buch mit Basis-Image Debian Bookworm" \
+#   org.opencontainers.image.version="2023.10.0-bookworm" \
+#   org.opencontainers.image.licenses="GPL-3.0-or-later" \
+#   org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
 
-RUN <<EOF
-set -ex
-apt-get update
-# https://github.com/Yelp/dumb-init
-# https://packages.debian.org/bookworm/dumb-init
-apt-get install --no-install-recommends --yes dumb-init=1.2.5-2
+# RUN <<EOF
+# set -ex
+# apt-get update
+# # https://github.com/Yelp/dumb-init
+# # https://packages.debian.org/bookworm/dumb-init
+# apt-get install --no-install-recommends --yes dumb-init=1.2.5-2
 
-apt-get autoremove --yes
-apt-get clean --yes
-rm -rf /var/lib/apt/lists/*
-rm -rf /tmp/*
-EOF
+# apt-get autoremove --yes
+# apt-get clean --yes
+# rm -rf /var/lib/apt/lists/*
+# rm -rf /tmp/*
+# EOF
 
-WORKDIR /opt/app
+# WORKDIR /opt/app
 
-USER node
+# USER node
 
-COPY --chown=node:node package.json .env.STUDENT ./
-COPY --from=deps --chown=node:node /home/node/node_modules ./node_modules
-COPY --from=builder --chown=node:node /home/node/dist ./dist
-COPY --chown=node:node src/config/resources ./dist/config/resources
+# COPY --chown=node:node package.json .env ./
+# COPY --from=deps --chown=node:node /home/node/node_modules ./node_modules
+# COPY --from=builder --chown=node:node /home/node/dist ./dist
+# COPY --chown=node:node src/config/resources ./dist/config/resources
 
-EXPOSE 3000
+# EXPOSE 3000
 
-# Bei CMD statt ENTRYPOINT kann das Kommando bei "docker run ..." ueberschrieben werden
-# "Array Syntax" damit auch <Strg>C funktioniert
-# https://github.com/Yelp/dumb-init:
-# "a simple process supervisor and init system designed to run as PID 1 inside
-# minimal container environments (such as Docker)""
-ENTRYPOINT ["dumb-init", "/usr/local/bin/node", "dist/main.js"]
+# # Bei CMD statt ENTRYPOINT kann das Kommando bei "docker run ..." ueberschrieben werden
+# # "Array Syntax" damit auch <Strg>C funktioniert
+# # https://github.com/Yelp/dumb-init:
+# # "a simple process supervisor and init system designed to run as PID 1 inside
+# # minimal container environments (such as Docker)""
+# ENTRYPOINT ["dumb-init", "/usr/local/bin/node", "dist/main.js"]
