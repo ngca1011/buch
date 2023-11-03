@@ -2,7 +2,7 @@
   "name": "film",
   "version": "2023.10.0",
   "description": "Beispiel",
-  "author": "Juergen Zimmermann",
+  "author": "Gruppe 9",
   "private": true,
   "license": "GPL-3.0",
   "exports": "./dist/src/main.js",

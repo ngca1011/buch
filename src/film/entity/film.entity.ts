@@ -50,8 +50,8 @@ import {
     VersionColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Direktor } from './direktor.entity.js';
 import { Schauspieler } from './schauspieler.entity.js';
+import { Titel } from './titel.entity.js';
 import { dbType } from '../../config/dbtype.js';
 
 /**
@@ -70,10 +70,6 @@ export class Film {
     @VersionColumn()
     readonly version: number | undefined;
 
-    @Column('varchar', { length: 100 })
-    @ApiProperty({ example: 'Titanic', type: String })
-    readonly titel: string | undefined;
-
     @Column('int')
     @ApiProperty({ example: 5, type: Number })
     readonly rating: number | undefined;
@@ -87,14 +83,22 @@ export class Film {
     @ApiProperty({ example: '3 Std. 30 Minuten', type: String })
     readonly dauer: string | undefined;
 
+    @Column('varchar', { length: 40 })
+    @ApiProperty({ example: 'Englisch', type: String })
+    readonly sprache: string | undefined;
+
+    @Column('varchar', { length: 40 })
+    @ApiProperty({ example: 'James Cameron', type: String })
+    readonly direktor: string | undefined;
+
     @Column('simple-array')
     readonly genre: string[] | undefined;
 
     // undefined wegen Updates
-    @OneToOne(() => Direktor, (direktor) => direktor.film, {
+    @OneToOne(() => Titel, (titel) => titel.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly direktor: Direktor | undefined;
+    readonly titel: Titel | undefined;
 
     // undefined wegen Updates
     @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
@@ -125,10 +129,11 @@ export class Film {
         JSON.stringify({
             id: this.id,
             version: this.version,
-            titel: this.titel,
             rating: this.rating,
             filmstart: this.filmstart,
             dauer: this.dauer,
+            sprache: this.sprache,
+            direktor: this.direktor,
             genre: this.genre,
         });
 }

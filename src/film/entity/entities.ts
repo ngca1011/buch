@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Direktor } from './direktor.entity.js';
 import { Film } from './film.entity.js';
 import { Schauspieler } from './schauspieler.entity.js';
+import { Titel } from './titel.entity.js';
 
 // erforderlich in src/config/db.ts und src/film/film.module.ts
-export const entities = [Schauspieler, Film, Direktor];
+export const entities = [Schauspieler, Film, Titel];

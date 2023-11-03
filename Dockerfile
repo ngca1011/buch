@@ -123,7 +123,7 @@ LABEL org.opencontainers.image.title="film" \
     org.opencontainers.image.description="Appserver film mit distroless-Image" \
     org.opencontainers.image.version="2023.10.0-distroless" \
     org.opencontainers.image.licenses="GPL-3.0-or-later" \
-    org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
+    org.opencontainers.image.authors="Gruppe 9"
 
 WORKDIR /opt/app
 

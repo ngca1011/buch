@@ -38,6 +38,15 @@ export class Schauspieler {
     @Column('varchar', { length: 40 })
     readonly nachname!: string;
 
+    @Column('varchar', { length: 20 })
+    readonly geschlecht: string | undefined;
+
+    @Column('varchar', { length: 40 })
+    readonly email: string | undefined;
+
+    @Column('varchar', { length: 40 })
+    readonly telefonnummer: string | undefined;
+
     @ManyToOne(() => Film, (film) => film.schauspielers)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
@@ -47,5 +56,8 @@ export class Schauspieler {
             id: this.id,
             vorname: this.vorname,
             nachname: this.nachname,
+            geschlecht: this.geschlecht,
+            email: this.email,
+            telefonnummer: this.telefonnummer,
         });
 }

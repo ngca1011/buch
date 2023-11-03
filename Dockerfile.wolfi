@@ -97,7 +97,7 @@ LABEL org.opencontainers.image.title="film" \
   org.opencontainers.image.description="Appserver film mit Basis-Image Wolfi" \
   org.opencontainers.image.version="2023.10.0-wolfi" \
   org.opencontainers.image.licenses="GPL-3.0-or-later" \
-  org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
+  org.opencontainers.image.authors="Gruppe 9"
 
 WORKDIR /opt/app
 

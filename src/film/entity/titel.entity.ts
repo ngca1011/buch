@@ -25,27 +25,31 @@ import {
 import { Film } from './film.entity.js';
 
 @Entity()
-export class Direktor {
+export class Titel {
     @Column('int')
     // https://typeorm.io/entities#primary-columns
     // CAVEAT: zuerst @Column() und erst dann @PrimaryGeneratedColumn()
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
-    @Column('varchar', { length: 40 })
-    readonly vorname!: string;
+    @Column('varchar', { unique: true, length: 40 })
+    readonly titel!: string;
 
     @Column('varchar', { length: 40 })
-    readonly nachname!: string;
+    readonly originaltitel: string | undefined;
 
-    @OneToOne(() => Film, (film) => film.direktor)
+    @Column('varchar', { length: 40 })
+    readonly serienname: string | undefined;
+
+    @OneToOne(() => Film, (film) => film.titel)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
 
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
-            vorname: this.vorname,
-            nachname: this.nachname,
+            titel: this.titel,
+            originaltitel: this.originaltitel,
+            serienname: this.serienname,
         });
 }
