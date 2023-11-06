@@ -77,7 +77,7 @@ export class Film {
     // das Temporal-API ab ES2022 wird von TypeORM noch nicht unterstuetzt
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    readonly filmstart: Date | string | undefined;
+    readonly filmstart: string | undefined;
 
     @Column('varchar', { length: 30 })
     @ApiProperty({ example: '3 Std. 30 Minuten', type: String })
@@ -94,17 +94,15 @@ export class Film {
     @Column('simple-array')
     readonly genre: string[] | undefined;
 
-    // undefined wegen Updates
     @OneToOne(() => Titel, (titel) => titel.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly titel: Titel | undefined;
+    readonly titel!: Titel;
 
-    // undefined wegen Updates
     @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly schauspielers: Schauspieler[] | undefined;
+    readonly schauspielers!: Schauspieler[];
 
     // https://typeorm.io/entities#special-columns
     // https://typeorm.io/entities#column-types-for-postgres
