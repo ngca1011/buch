@@ -79,9 +79,9 @@ export class Film {
     @ApiProperty({ example: '2021-01-31' })
     readonly filmstart: Date | string | undefined;
 
-    @Column('varchar', { length: 30 })
-    @ApiProperty({ example: '3 Std. 30 Minuten', type: String })
-    readonly dauer: string | undefined;
+    @Column('int')
+    @ApiProperty({ example: '180', type: Number })
+    readonly dauer: number | undefined;
 
     @Column('varchar', { length: 40 })
     @ApiProperty({ example: 'Englisch', type: String })
