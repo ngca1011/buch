@@ -21,7 +21,6 @@
  */
 
 import { Film } from './../entity/film.entity.js';
-import { type Titel } from '../entity/titel.entity.js';
 // eslint-disable-next-line sort-imports
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { QueryBuilder } from './query-builder.js';
@@ -43,10 +42,10 @@ export interface Suchkriterien {
     readonly dauer?: string;
     readonly sprache?: string;
     readonly direktor?: string;
-    readonly genre?: string;
-    readonly javascript?: string;
-    readonly typescript?: string;
-    readonly titel?: Titel;
+    readonly action?: string;
+    readonly horror?: string;
+    readonly romance?: string;
+    readonly titel?: string;
 }
 
 /**
@@ -119,10 +118,10 @@ export class FilmReadService {
     }
 
     /**
-     * Bücher asynchron suchen.
+     * Filme asynchron suchen.
      * @param suchkriterien JSON-Objekt mit Suchkriterien
      * @returns Ein JSON-Array mit den gefundenen Filmen.
-     * @throws NotFoundException falls keine Bücher gefunden wurden.
+     * @throws NotFoundException falls keine Filme gefunden wurden.
      */
     async find(suchkriterien?: Suchkriterien) {
         this.#logger.debug('find: suchkriterien=%o', suchkriterien);
@@ -155,13 +154,14 @@ export class FilmReadService {
     }
 
     #checkKeys(keys: string[]) {
-        // Ist jedes Suchkriterium auch eine Property von Film oder "schlagwoerter"?
+        // Ist jedes Suchkriterium auch eine Property von Film oder "genre"?
         let validKeys = true;
         keys.forEach((key) => {
             if (
                 !this.#filmProps.includes(key) &&
-                key !== 'javascript' &&
-                key !== 'typescript'
+                key !== 'action' &&
+                key !== 'horror' &&
+                key !== 'romance'
             ) {
                 this.#logger.debug(
                     '#find: ungueltiges Suchkriterium "%s"',

@@ -89,25 +89,26 @@ export class QueryBuilder {
      * @param suchkriterien JSON-Objekt mit Suchkriterien
      * @returns QueryBuilder
      */
-    // z.B. { titel: 'a', rating: 5, javascript: true }
+    // z.B. { titel: 'a', rating: 5, action: true }
     // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
     // eslint-disable-next-line max-lines-per-function
-    build({ titel, javascript, typescript, ...props }: Suchkriterien) {
+    build({ titel, action, horror, romance, ...props }: Suchkriterien) {
         this.#logger.debug(
-            'build: titel=%s, javascript=%s, typescript=%s, props=%o',
+            'build: titel=%s, action=%s, horror=%s, romance=%s, props=%o',
             titel,
-            javascript,
-            typescript,
+            action,
+            horror,
+            romance,
             props,
         );
 
         let queryBuilder = this.#repo.createQueryBuilder(this.#filmAlias);
         queryBuilder.innerJoinAndSelect(`${this.#filmAlias}.titel`, 'titel');
 
-        // z.B. { titel: 'a', rating: 5, javascript: true }
+        // z.B. { titel: 'a', rating: 5, action: true }
         // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
         // type-coverage:ignore-next-line
-        // const { titel, javascript, typescript, ...props } = suchkriterien;
+        // const { titel, action, horror, romance, ...props } = suchkriterien;
 
         let useWhere = true;
 
@@ -124,28 +125,34 @@ export class QueryBuilder {
             useWhere = false;
         }
 
-        if (javascript === 'true') {
+        if (action === 'true') {
             queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#filmAlias}.schlagwoerter like '%JAVASCRIPT%'`,
-                  )
+                ? queryBuilder.where(`${this.#filmAlias}.genre like '%ACTION%'`)
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.schlagwoerter like '%JAVASCRIPT%'`,
+                      `${this.#filmAlias}.genre like '%ACTION%'`,
                   );
             useWhere = false;
         }
 
-        if (typescript === 'true') {
+        if (horror === 'true') {
             queryBuilder = useWhere
-                ? queryBuilder.where(
-                      `${this.#filmAlias}.schlagwoerter like '%TYPESCRIPT%'`,
-                  )
+                ? queryBuilder.where(`${this.#filmAlias}.genre like '%HORROR%'`)
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.schlagwoerter like '%TYPESCRIPT%'`,
+                      `${this.#filmAlias}.genre like '%HORROR%'`,
                   );
             useWhere = false;
         }
 
+        if (romance === 'true') {
+            queryBuilder = useWhere
+                ? queryBuilder.where(
+                      `${this.#filmAlias}.genre like '%ROMANCE%'`,
+                  )
+                : queryBuilder.andWhere(
+                      `${this.#filmAlias}.genre like '%ROMANCE%'`,
+                  );
+            useWhere = false;
+        }
         // Restliche Properties als Key-Value-Paare: Vergleiche auf Gleichheit
         Object.keys(props).forEach((key) => {
             const param: Record<string, any> = {};

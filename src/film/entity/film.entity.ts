@@ -77,7 +77,7 @@ export class Film {
     // das Temporal-API ab ES2022 wird von TypeORM noch nicht unterstuetzt
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    readonly filmstart: string | undefined;
+    readonly filmstart: Date | string | undefined;
 
     @Column('varchar', { length: 30 })
     @ApiProperty({ example: '3 Std. 30 Minuten', type: String })

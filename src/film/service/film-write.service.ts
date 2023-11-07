@@ -88,7 +88,7 @@ export class FilmWriteService {
 
         const { titel } = film;
         try {
-            await this.#readService.find({ titel: titel }); // eslint-disable-line object-shorthand
+            await this.#readService.find({ titel: titel.titel });
         } catch (err) {
             if (err instanceof NotFoundException) {
                 return;
