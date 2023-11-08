@@ -39,7 +39,7 @@ export interface FindByIdParams {
 export interface Suchkriterien {
     readonly rating?: number;
     readonly filmstart?: string;
-    readonly dauer?: string;
+    readonly dauer?: number;
     readonly sprache?: string;
     readonly direktor?: string;
     readonly action?: string;

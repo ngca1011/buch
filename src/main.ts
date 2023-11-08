@@ -42,8 +42,8 @@ const { httpsOptions, port } = nodeConfig;
 // "Arrow Function" ab ES 2015
 const setupSwagger = (app: INestApplication) => {
     const config = new DocumentBuilder()
-        .setTitle('Buch')
-        .setDescription('Beispiel für Software Engineering')
+        .setTitle('Film')
+        .setDescription('Eigenes Projekt für Software Engineering')
         .setVersion('2023.10.0')
         .addBearerAuth()
         .build();
