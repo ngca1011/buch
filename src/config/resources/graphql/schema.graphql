@@ -20,18 +20,17 @@ schema {
   mutation: Mutation
 }
 
-"Funktionen, um Bücherdaten zu lesen"
+"Funktionen, um Filmdaten zu lesen"
 type Query {
-  buecher(titel: String): [Buch!]
-
-  buch(id: ID!): Buch
+  filme(titel: String): [Film!]
+  film(id: ID!): Film
 }
 
-"Funktionen, um Bücher neu anzulegen, zu aktualisieren oder zu löschen"
+"Funktionen, um Filme neu anzulegen, zu aktualisieren oder zu löschen"
 type Mutation {
-  create(input: BuchInput!): CreatePayload
+  create(input: FilmInput!): CreatePayload
 
-  update(input: BuchUpdateInput!): UpdatePayload
+  update(input: FilmUpdateInput!): UpdatePayload
 
   delete(id: ID!): Boolean
 
@@ -39,87 +38,82 @@ type Mutation {
   login(username: String!, password: String!): LoginResult
 }
 
-"Daten zum Titel eines Buches"
+"Daten zum Titel eines Filmes"
 type Titel {
   titel: String!
   untertitel: String
 }
 
-"Daten zum Titel eines Buches"
-type Abbildung {
-  beschriftung: String!
-  contentType: String
+"Daten zum Schauspieler eines Filmes"
+type Schauspieler {
+  name: String!
+  rolle: String
 }
 
-"Datenschema zu einem Buch, das gelesen wird"
-type Buch {
+"Datenschema zu einem Film, der geschaut wird"
+type Film {
   # ID ist bei Apollo ein String
   id: Int!
   version: Int!
-  isbn: String!
   rating: Int
-  art: Art
-  preis: Float!
-  lieferbar: Boolean
-  datum: String
-  homepage: String
-  schlagwoerter: [String]
-  # 1:1-Beziehung
+  filmstart: String
+  dauer: Int
+  sprache: String
+  direktor: String
+  genre: [String]
   titel: Titel!
-  # field mit @ResolveField
-  rabatt(short: Boolean): String!
+  schauspielers: [Schauspielers!]
+  erzeugt: String
+  aktualisiert: String
 }
 
-"Enum-Typ für die Art eines Buches"
-enum Art {
-  DRUCKAUSGABE
-  KINDLE
+"Enum-Typ für die Art eines Filmes"
+enum Genre {
+  ACTION
+  DRAMA
+  FANTASY
+  THRILLER
 }
 
-"Daten zum Titel eines neuen Buches"
+"Daten zum Titel eines neuen Filmes"
 input TitelInput {
   titel: String!
   untertitel: String
 }
 
-"Daten zu den Abbildungen eines Buches"
-input AbbildungInput {
-  beschriftung: String!
-  contentType: String!
+"Daten zu den Abbildungen eines Filmes"
+input SchauspielerInput {
+  name: String!
+  rolle: String
 }
 
-"Daten für ein neues Buch"
-input BuchInput {
-  isbn: String
+"Daten für ein neuen Film"
+input FilmInput {
   rating: Int
-  art: Art
-  preis: Float
-  rabatt: Float
-  lieferbar: Boolean
-  datum: String
-  homepage: String
-  schlagwoerter: [String]
+  filmstart: String
+  dauer: Int
+  sprache: String
+  direktor: String
+  genre: [Genre!]!
   titel: TitelInput!
-  abbildungen: [AbbildungInput!]
+  schauspielers: [SchauspielerInput!]
 }
 
 type CreatePayload {
   id: Int
 }
 
-"Daten für ein zu änderndes Buch"
-input BuchUpdateInput {
-  id: ID
-  version: Int
-  isbn: String
+"Daten für ein zu ändernden Film"
+input FilmUpdateInput {
+  id: ID!
   rating: Int
-  art: Art
-  preis: Float
-  rabatt: Float
-  lieferbar: Boolean
-  datum: String
-  homepage: String
-  schlagwoerter: [String]
+  filmstart: String
+  dauer: Int
+  sprache: String
+  direktor: String
+  genre: [Genre!]
+  titel: TitelInput
+  schauspielers: [SchauspielerInput]
 }
 
 type UpdatePayload {
