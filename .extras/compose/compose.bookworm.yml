@@ -15,4 +15,4 @@
 
 services:
   buch:
-    image: juergenzimmermann/buch:2023.10.0-bookworm
+    image: juergenzimmermann/film:2023.10.0-bookworm

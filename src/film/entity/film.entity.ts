@@ -92,7 +92,7 @@ export class Film {
     readonly direktor: string | undefined;
 
     @Column('simple-array')
-    readonly genre: string[] | undefined;
+    readonly genres: string[] | undefined;
 
     @OneToOne(() => Titel, (titel) => titel.film, {
         cascade: ['insert', 'remove'],
@@ -132,6 +132,6 @@ export class Film {
             dauer: this.dauer,
             sprache: this.sprache,
             direktor: this.direktor,
-            genre: this.genre,
+            genres: this.genres,
         });
 }
