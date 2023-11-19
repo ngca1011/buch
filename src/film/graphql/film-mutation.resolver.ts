@@ -18,7 +18,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { IsInt, IsNumberString, Min } from 'class-validator';
 import { UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
-import { type Abbildung } from '../entity/abbildung.entity.js';
+import { type Schauspieler } from '../entity/schauspieler.entity.js';
 import { type Film } from '../entity/film.entity.js';
 import { FilmDTO } from '../rest/filmDTO.entity.js';
 import { FilmWriteService } from '../service/film-write.service.js';
@@ -43,19 +43,6 @@ import { getLogger } from '../../logger/logger.js';
 
 export interface CreatePayload {
     readonly id: number;
-}
-
-export interface UpdatePayload {
-    readonly version: number;
-}
-
-export class FilmUpdateDTO extends FilmDTO {
-    @IsNumberString()
-    readonly id!: string;
-
-    @IsInt()
-    @Min(0)
-    readonly version!: number;
 }
 @Resolver()
 // alternativ: globale Aktivierung der Guards https://docs.nestjs.com/security/authorization#basic-rbac-implementation
@@ -82,35 +69,6 @@ export class FilmMutationResolver {
         this.#logger.debug('createFilm: id=%d', id);
         const payload: CreatePayload = { id };
         return payload;
-    }
-
-    @Mutation()
-    @RolesAllowed('admin', 'fachabteilung')
-    async update(@Args('input') filmDTO: FilmUpdateDTO) {
-        this.#logger.debug('update: film=%o', filmDTO);
-
-        const film = this.#filmUpdateDtoToFilm(filmDTO);
-        const versionStr = `"${filmDTO.version.toString()}"`;
-
-        const versionResult = await this.#service.update({
-            id: Number.parseInt(filmDTO.id, 10),
-            film,
-            version: versionStr,
-        });
-        // TODO BadUserInputError
-        this.#logger.debug('updateFilm: versionResult=%d', versionResult);
-        const payload: UpdatePayload = { version: versionResult };
-        return payload;
-    }
-
-    @Mutation()
-    @RolesAllowed('admin')
-    async delete(@Args() id: IdInput) {
-        const idStr = id.id;
-        this.#logger.debug('delete: id=%s', idStr);
-        const result = await this.#service.delete(idStr);
-        this.#logger.debug('deleteFilm: result=%s', result);
-        return result;
     }
 
     #filmDtoToFilm(filmDTO: FilmDTO): Film {
@@ -148,55 +106,7 @@ export class FilmMutationResolver {
         };
 
         // Rueckwaertsverweis
-        film.titel!.film = film;
+        film.titel.film = film;
         return film;
     }
-
-    #filmUpdateDtoToFilm(filmDTO: FilmUpdateDTO): Film {
-        return {
-            id: undefined,
-            version: undefined,
-            rating: undefined,
-            filmstart: undefined,
-            dauer: undefined,
-            sprache: undefined,
-            direktor: undefined,
-            genre: undefined
-            datum: filmDTO.datum,
-            homepage: filmDTO.homepage,
-            schlagwoerter: filmDTO.schlagwoerter,
-            titel: undefined,
-            abbildungen: undefined,
-            erzeugt: undefined,
-            aktualisiert: undefined,
-        };
-    }
-
-    // #errorMsgCreateFilm(err: CreateError) {
-    //     switch (err.type) {
-    //         case 'IsbnExists': {
-    //             return `Die ISBN ${err.isbn} existiert bereits`;
-    //         }
-    //         default: {
-    //             return 'Unbekannter Fehler';
-    //         }
-    //     }
-    // }
-
-    // #errorMsgUpdateFilm(err: UpdateError) {
-    //     switch (err.type) {
-    //         case 'FilmNotExists': {
-    //             return `Es gibt kein Film mit der ID ${err.id}`;
-    //         }
-    //         case 'VersionInvalid': {
-    //             return `"${err.version}" ist keine gueltige Versionsnummer`;
-    //         }
-    //         case 'VersionOutdated': {
-    //             return `Die Versionsnummer "${err.version}" ist nicht mehr aktuell`;
-    //         }
-    //         default: {
-    //             return 'Unbekannter Fehler';
-    //         }
-    //     }
-    // }
 }
