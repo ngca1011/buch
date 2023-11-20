@@ -77,7 +77,7 @@ pipeline {
 
                 // https://www.jenkins.io/doc/pipeline/steps/git
                 // "named arguments" statt Funktionsaufruf mit Klammern
-                git url: 'https://github.com/juergenzimmermann/buch', branch: 'main', poll: true
+                git url: 'https://github.com/ngca1011/film', branch: 'main', poll: true
             }
         }
 
@@ -128,7 +128,7 @@ pipeline {
                 }
 
                 // /var/jenkins_home ist das Homedirectory vom User "jenkins"
-                // /var/jenkins_home/workspace/buch (siehe "pwd" oben)
+                // /var/jenkins_home/workspace/film (siehe "pwd" oben)
                 sh 'cat package.json'
 
                 // Konfigurationsverzeichnis /root/.npm
@@ -207,14 +207,14 @@ pipeline {
 
                 success {
                     script {
-                        if (fileExists("${env.WORKSPACE}/buch.zip")) {
-                            sh 'rm buch.zip'
+                        if (fileExists("${env.WORKSPACE}/film.zip")) {
+                            sh 'rm film.zip'
                         }
                     }
                     // https://www.jenkins.io/doc/pipeline/steps/pipeline-utility-steps/#zip-create-zip-file
-                    zip zipFile: 'buch.zip', archive: false, dir: 'dist'
-                    // jobs/buch/builds/.../archive/buch.zip
-                    archiveArtifacts 'buch.zip'
+                    zip zipFile: 'film.zip', archive: false, dir: 'dist'
+                    // jobs/film/builds/.../archive/film.zip
+                    archiveArtifacts 'film.zip'
                 }
             }
         }
@@ -222,7 +222,7 @@ pipeline {
         stage('Docker Image bauen') {
             steps {
                 echo 'TODO: Docker-Image bauen und veroeffentlichen'
-                // sh 'docker buildx build --tag juergenzimmermann/buch:2023.10.0 .'
+                // sh 'docker buildx build --tag juergenzimmermann/film:2023.10.0 .'
             }
         }
 

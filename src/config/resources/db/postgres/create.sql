@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS film (
     dauer         integer NOT NULL CHECK (dauer > 0),
     sprache       varchar(40) NOT NULL,
     direktor      varchar(40) NOT NULL,
-    schlagwoerter varchar(64),
+    genres        varchar(64),
                   -- https://www.postgresql.org/docs/current/datatype-datetime.html
     erzeugt       timestamp NOT NULL DEFAULT NOW(),
     aktualisiert  timestamp NOT NULL DEFAULT NOW()

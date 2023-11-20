@@ -30,10 +30,6 @@ type Query {
 type Mutation {
   create(input: FilmInput!): CreatePayload
 
-  update(input: FilmUpdateInput!): UpdatePayload
-
-  delete(id: ID!): Boolean
-
   # Mutation, weil z.B. der Login-Zeitpunkt im IDM-System gespeichert wird
   login(username: String!, password: String!): LoginResult
 }
@@ -41,13 +37,17 @@ type Mutation {
 "Daten zum Titel eines Filmes"
 type Titel {
   titel: String!
-  untertitel: String
+  originaltitel: String
+  serienname: String
 }
 
 "Daten zum Schauspieler eines Filmes"
 type Schauspieler {
+  vorname: String!
   name: String!
-  rolle: String
+  geschlecht: String
+  email: String
+  telefonnummer: String
 }
 
 "Datenschema zu einem Film, der geschaut wird"
@@ -60,31 +60,27 @@ type Film {
   dauer: Int
   sprache: String
   direktor: String
-  genre: [String]
-  titel: Titel!
-  schauspielers: [Schauspielers!]
+  genres: [String]
+  titel: Titel
+  schauspielers: [Schauspieler]
   erzeugt: String
   aktualisiert: String
-}
-
-"Enum-Typ für die Art eines Filmes"
-enum Genre {
-  ACTION
-  DRAMA
-  FANTASY
-  THRILLER
 }
 
 "Daten zum Titel eines neuen Filmes"
 input TitelInput {
   titel: String!
-  untertitel: String
+  originaltitel: String
+  serienname: String
 }
 
-"Daten zu den Abbildungen eines Filmes"
+"Daten zu den Schauspielers eines Filmes"
 input SchauspielerInput {
+  vorname: String!
   name: String!
-  rolle: String
+  geschlecht: String
+  email: String
+  telefonnummer: String
 }
 
 "Daten für ein neuen Film"
@@ -94,30 +90,13 @@ input FilmInput {
   dauer: Int
   sprache: String
   direktor: String
-  genre: [Genre!]!
-  titel: TitelInput!
-  schauspielers: [SchauspielerInput!]
-}
-
-type CreatePayload {
-  id: Int
-}
-
-"Daten für ein zu ändernden Film"
-input FilmUpdateInput {
-  id: ID!
-  rating: Int
-  filmstart: String
-  dauer: Int
-  sprache: String
-  direktor: String
-  genre: [Genre!]
+  genre: [String]
   titel: TitelInput
   schauspielers: [SchauspielerInput]
 }
 
-type UpdatePayload {
-  version: Int
+type CreatePayload {
+  id: Int
 }
 
 type LoginResult {

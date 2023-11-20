@@ -127,18 +127,22 @@ export class QueryBuilder {
 
         if (action === 'true') {
             queryBuilder = useWhere
-                ? queryBuilder.where(`${this.#filmAlias}.genre like '%ACTION%'`)
+                ? queryBuilder.where(
+                      `${this.#filmAlias}.genres like '%ACTION%'`,
+                  )
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.genre like '%ACTION%'`,
+                      `${this.#filmAlias}.genres like '%ACTION%'`,
                   );
             useWhere = false;
         }
 
         if (horror === 'true') {
             queryBuilder = useWhere
-                ? queryBuilder.where(`${this.#filmAlias}.genre like '%HORROR%'`)
+                ? queryBuilder.where(
+                      `${this.#filmAlias}.genres like '%HORROR%'`,
+                  )
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.genre like '%HORROR%'`,
+                      `${this.#filmAlias}.genres like '%HORROR%'`,
                   );
             useWhere = false;
         }
@@ -146,10 +150,10 @@ export class QueryBuilder {
         if (romance === 'true') {
             queryBuilder = useWhere
                 ? queryBuilder.where(
-                      `${this.#filmAlias}.genre like '%ROMANCE%'`,
+                      `${this.#filmAlias}.genres like '%ROMANCE%'`,
                   )
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.genre like '%ROMANCE%'`,
+                      `${this.#filmAlias}.genres like '%ROMANCE%'`,
                   );
             useWhere = false;
         }

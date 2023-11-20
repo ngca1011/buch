@@ -154,7 +154,7 @@ export class FilmReadService {
     }
 
     #checkKeys(keys: string[]) {
-        // Ist jedes Suchkriterium auch eine Property von Film oder "genre"?
+        // Ist jedes Suchkriterium auch eine Property von Film oder "genres"?
         let validKeys = true;
         keys.forEach((key) => {
             if (

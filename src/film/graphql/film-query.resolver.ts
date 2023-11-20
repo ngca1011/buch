@@ -55,16 +55,16 @@ export class FilmQueryResolver {
         return film;
     }
 
-    @Query('buecher')
+    @Query('filme')
     async find(@Args() titel: { titel: string } | undefined) {
         const titelStr = titel?.titel;
         this.#logger.debug('find: Suchkriterium titel=%s', titelStr);
         const suchkriterium = titelStr === undefined ? {} : { titel: titelStr };
 
-        const buecher = await this.#service.find(suchkriterium);
+        const filme = await this.#service.find(suchkriterium);
 
-        this.#logger.debug('find: buecher=%o', buecher);
-        return buecher;
+        this.#logger.debug('find: filme=%o', filme);
+        return filme;
     }
 
     @ResolveField('rabatt')
