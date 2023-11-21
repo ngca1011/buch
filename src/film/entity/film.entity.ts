@@ -94,15 +94,15 @@ export class Film {
     @Column('simple-array')
     readonly genres: string[] | undefined;
 
-    @OneToOne(() => Titel, (titel) => titel.film, {
+    @OneToOne(() => Titel, (titel: Titel) => titel.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly titel!: Titel;
+    readonly titel: Titel | undefined;
 
-    @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
+    @OneToMany(() => Schauspieler, (schauspieler: Schauspieler) => schauspieler.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly schauspielers!: Schauspieler[];
+    readonly schauspielers: Schauspieler[] | undefined;
 
     // https://typeorm.io/entities#special-columns
     // https://typeorm.io/entities#column-types-for-postgres
