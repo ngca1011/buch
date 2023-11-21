@@ -67,18 +67,18 @@ export class FilmQueryResolver {
         return filme;
     }
 
-    @ResolveField('rabatt')
-    rabatt(@Parent() film: Film, short: boolean | undefined) {
-        if (this.#logger.isLevelEnabled('debug')) {
-            this.#logger.debug(
-                'rabatt: film=%s, short=%s',
-                film.toString(),
-                short,
-            );
-        }
-        const rabatt = film.rabatt ?? 0;
-        const shortStr = short === undefined || short ? '%' : 'Prozent';
+    //@ResolveField('rabatt')
+    //rabatt(@Parent() film: Film, short: boolean | undefined) {
+       // if (this.#logger.isLevelEnabled('debug')) {
+           // this.#logger.debug(
+              //  'rabatt: film=%s, short=%s',
+            //    film.toString(),
+          //      short,
+        //    );
+      //  }
+        //const rabatt = film.rabatt ?? 0;
+        //const shortStr = short === undefined || short ? '%' : 'Prozent';
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        return `${(rabatt * 100).toFixed(2)} ${shortStr}`;
-    }
+        //return `${(rabatt * 100).toFixed(2)} ${shortStr}`;
+    //}
 }

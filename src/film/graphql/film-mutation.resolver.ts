@@ -76,33 +76,40 @@ export class FilmMutationResolver {
         const titel: Titel = {
             id: undefined,
             titel: titelDTO.titel,
-            untertitel: titelDTO.untertitel,
-            film: undefined,
+            originaltitel: titelDTO.originaltitel,
+            serienname: titelDTO.serienname,
         };
-        const abbildungen = filmDTO.abbildungen?.map((abbildungDTO) => {
-            const abbildung: Abbildung = {
-                id: undefined,
-                beschriftung: abbildungDTO.beschriftung,
-                contentType: abbildungDTO.contentType,
-                film: undefined,
-            };
-            return abbildung;
-        });
+        //const abbildungen = filmDTO.abbildungen?.map((abbildungDTO) => {
+          //  const abbildung: Abbildung = {
+            //    id: undefined,
+              //  beschriftung: abbildungDTO.beschriftung,
+               // contentType: abbildungDTO.contentType,
+               // film: undefined,
+            //};
+            //return abbildung;
+       // });
         const film: Film = {
             id: undefined,
             version: undefined,
             rating: filmDTO.rating,
-            filmstart: filmDTO.film
-            preis: filmDTO.preis,
-            rabatt: filmDTO.rabatt,
-            lieferbar: filmDTO.lieferbar,
-            datum: filmDTO.datum,
-            homepage: filmDTO.homepage,
-            schlagwoerter: filmDTO.schlagwoerter,
-            titel,
-            abbildungen,
-            erzeugt: undefined,
-            aktualisiert: undefined,
+            filmstart: filmDTO.filmstart,
+            dauer: filmDTO.dauer,
+            sprache: undefined,
+            direktor: undefined,
+            genres: undefined,
+            titel: undefined,
+            schauspielers: undefined,
+
+            //preis: filmDTO.preis,
+            //rabatt: filmDTO.rabatt,
+            //lieferbar: filmDTO.lieferbar,
+            //datum: filmDTO.datum,
+            //homepage: filmDTO.homepage,
+            //schlagwoerter: filmDTO.schlagwoerter,
+            //titel,
+            //abbildungen,
+            //erzeugt: undefined,
+            //aktualisiert: undefined,
         };
 
         // Rueckwaertsverweis
