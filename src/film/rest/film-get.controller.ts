@@ -75,10 +75,10 @@ export interface Links {
     readonly remove?: Link;
 }
 
-/** Typedefinition für ein Titel-Objekt ohne Rückwärtsverweis zum Buch */
+/** Typedefinition für ein Titel-Objekt ohne Rückwärtsverweis zum Film */
 export type TitelModel = Omit<Titel, 'film' | 'id'>;
 
-/** Buch-Objekt mit HATEOAS-Links */
+/** Film-Objekt mit HATEOAS-Links */
 export type FilmModel = Omit<
     Film,
     'schauspielers' | 'aktualisiert' | 'erzeugt' | 'id' | 'titel' | 'version'
@@ -88,7 +88,7 @@ export type FilmModel = Omit<
     _links: Links;
 };
 
-/** Buch-Objekte mit HATEOAS-Links in einem JSON-Array. */
+/** Film-Objekte mit HATEOAS-Links in einem JSON-Array. */
 export interface FilmenModel {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _embedded: {

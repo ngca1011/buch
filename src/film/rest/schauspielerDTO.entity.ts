@@ -21,8 +21,8 @@
  * @packageDocumentation
  */
 
+import { IsEmail, Matches, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { MaxLength } from 'class-validator';
 
 /**
  * Entity-Klasse für Schauspieler ohne TypeORM.
@@ -40,10 +40,12 @@ export class SchauspielerDTO {
     @ApiProperty({ example: 'Männlich', type: String })
     readonly geschlecht!: string;
 
+    @IsEmail()
     @MaxLength(40)
     @ApiProperty({ example: 'example@gmail.com', type: String })
     readonly email!: string;
 
+    @Matches(/^\+?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4,6}$/mu)
     @MaxLength(40)
     @ApiProperty({ example: 'Die Telefonnummer', type: String })
     readonly telefonnummer!: string;

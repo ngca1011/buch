@@ -74,7 +74,7 @@ export class FilmDtoOhneRef {
 
     @IsOptional()
     @ArrayUnique()
-    @ApiProperty({ example: 'Horror', type: String })
+    @ApiProperty({ example: 'HORROR', type: String })
     readonly genres: string[] | undefined;
 }
 
@@ -87,7 +87,6 @@ export class FilmDTO extends FilmDtoOhneRef {
     @ApiProperty({ type: TitelDTO })
     readonly titel!: TitelDTO; // NOSONAR
 
-    @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
     @Type((): typeof SchauspielerDTO => SchauspielerDTO)

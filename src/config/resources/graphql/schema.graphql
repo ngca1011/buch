@@ -77,7 +77,7 @@ input TitelInput {
 "Daten zu den Schauspielers eines Filmes"
 input SchauspielerInput {
   vorname: String!
-  name: String!
+  nachname: String!
   geschlecht: String
   email: String
   telefonnummer: String
