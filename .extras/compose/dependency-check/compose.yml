@@ -24,7 +24,7 @@ services:
       - '--format'
       - 'ALL'
       - '--project'
-      - 'buch'
+      - 'film'
       - '--out'
       - '/dependency-check/report'
       - '--suppression'

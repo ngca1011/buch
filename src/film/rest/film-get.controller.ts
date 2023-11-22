@@ -32,11 +32,6 @@ import {
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
-import { type Film } from '../entity/film.entity.js';
-import {
-    FilmReadService,
-    type Suchkriterien,
-} from '../service/film-read.service.js';
 import {
     Controller,
     Get,
@@ -48,7 +43,12 @@ import {
     Res,
     UseInterceptors,
 } from '@nestjs/common';
+import {
+    FilmReadService,
+    type Suchkriterien,
+} from '../service/film-read.service.js';
 import { Request, Response } from 'express';
+import { type Film } from '../entity/film.entity.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { type Titel } from '../entity/titel.entity.js';
 import { getBaseUri } from './getBaseUri.js';
@@ -107,7 +107,6 @@ export interface FilmenModel {
  * den Typ Date nicht gibt.
  */
 export class FilmQuery implements Suchkriterien {
-
     @ApiProperty({ required: false })
     declare readonly rating: number;
 
@@ -237,7 +236,7 @@ export class FilmGetController {
         res.header('ETag', `"${versionDb}"`);
 
         // HATEOAS mit Atom Links und HAL (= Hypertext Application Language)
-        const filmModel = this.#toModel(film, req); 
+        const filmModel = this.#toModel(film, req);
         this.#logger.debug('getById: filmModel=%o', filmModel);
         return res.contentType(APPLICATION_HAL_JSON).json(filmModel);
     }
@@ -273,7 +272,7 @@ export class FilmGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const filmen : Film[] = await this.#service.find(query);
+        const filmen: Film[] = await this.#service.find(query);
         this.#logger.debug('get: %o', filmen);
 
         // HATEOAS: Atom Links je Film
@@ -302,9 +301,9 @@ export class FilmGetController {
 
         this.#logger.debug('#toModel: film=%o, links=%o', film, links);
         const titelModel: TitelModel = {
-            titel: film.titel?.titel ?? 'N/A', // eslint-disable-line unicorn/consistent-destructuring
-            originaltitel: film.titel?.originaltitel ?? 'N/A', // eslint-disable-line unicorn/consistent-destructuring
-            serienname: film.titel?.serienname ?? 'N/A', // eslint-disable-line unicorn/consistent-destructuring
+            titel: film.titel.titel, // eslint-disable-line unicorn/consistent-destructuring
+            originaltitel: film.titel.originaltitel ?? 'N/A', // eslint-disable-line unicorn/consistent-destructuring
+            serienname: film.titel.serienname ?? 'N/A', // eslint-disable-line unicorn/consistent-destructuring
         };
         /* eslint-disable unicorn/consistent-destructuring */
         const filmModel: FilmModel = {

@@ -29,12 +29,12 @@ import {
     IsOptional,
     IsPositive,
     Max,
+    MaxLength,
     Min,
     ValidateNested,
-    MaxLength,
 } from 'class-validator';
-import { SchauspielerDTO } from './schauspielerDTO.entity.js';
 import { ApiProperty } from '@nestjs/swagger';
+import { SchauspielerDTO } from './schauspielerDTO.entity.js';
 import { TitelDTO } from './titelDTO.entity.js';
 import { Type } from 'class-transformer';
 
@@ -76,7 +76,6 @@ export class FilmDtoOhneRef {
     @ArrayUnique()
     @ApiProperty({ example: 'Horror', type: String })
     readonly genres: string[] | undefined;
-
 }
 
 /**
@@ -86,14 +85,14 @@ export class FilmDTO extends FilmDtoOhneRef {
     @ValidateNested()
     @Type(() => TitelDTO)
     @ApiProperty({ type: TitelDTO })
-    readonly titel!: TitelDTO; //NOSONAR
+    readonly titel!: TitelDTO; // NOSONAR
 
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() : typeof SchauspielerDTO => SchauspielerDTO)
+    @Type((): typeof SchauspielerDTO => SchauspielerDTO)
     @ApiProperty({ type: [SchauspielerDTO] })
-    readonly schauspielers: SchauspielerDTO[] | undefined;
+    readonly schauspielers!: SchauspielerDTO[];
 
     // SchauspielerDTO
 }

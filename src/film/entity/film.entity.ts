@@ -97,12 +97,16 @@ export class Film {
     @OneToOne(() => Titel, (titel: Titel) => titel.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly titel: Titel | undefined;
+    readonly titel!: Titel;
 
-    @OneToMany(() => Schauspieler, (schauspieler: Schauspieler) => schauspieler.film, {
-        cascade: ['insert', 'remove'],
-    })
-    readonly schauspielers: Schauspieler[] | undefined;
+    @OneToMany(
+        () => Schauspieler,
+        (schauspieler: Schauspieler) => schauspieler.film,
+        {
+            cascade: ['insert', 'remove'],
+        },
+    )
+    readonly schauspielers!: Schauspieler[];
 
     // https://typeorm.io/entities#special-columns
     // https://typeorm.io/entities#column-types-for-postgres

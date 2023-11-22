@@ -1,4 +1,4 @@
-  /*
+/*
  * Copyright (C) 2021 - present Juergen Zimmermann, Hochschule Karlsruhe
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,20 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-// eslint-disable-next-line max-classes-per-file
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { IsInt, IsNumberString, Min } from 'class-validator';
 import { UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
-import { type Schauspieler } from '../entity/schauspieler.entity.js';
 import { type Film } from '../entity/film.entity.js';
 import { FilmDTO } from '../rest/filmDTO.entity.js';
 import { FilmWriteService } from '../service/film-write.service.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
-import { type IdInput } from './film-query.resolver.js';
 import { JwtAuthGraphQlGuard } from '../../security/auth/jwt/jwt-auth-graphql.guard.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { RolesAllowed } from '../../security/auth/roles/roles-allowed.decorator.js';
 import { RolesGraphQlGuard } from '../../security/auth/roles/roles-graphql.guard.js';
+import { type Schauspieler } from '../entity/schauspieler.entity.js';
 import { type Titel } from '../entity/titel.entity.js';
 import { getLogger } from '../../logger/logger.js';
 
@@ -65,7 +62,6 @@ export class FilmMutationResolver {
 
         const film = this.#filmDtoToFilm(filmDTO);
         const id = await this.#service.create(film);
-        // TODO BadUserInputError
         this.#logger.debug('createFilm: id=%d', id);
         const payload: CreatePayload = { id };
         return payload;
@@ -78,38 +74,33 @@ export class FilmMutationResolver {
             titel: titelDTO.titel,
             originaltitel: titelDTO.originaltitel,
             serienname: titelDTO.serienname,
+            film: undefined,
         };
-        //const abbildungen = filmDTO.abbildungen?.map((abbildungDTO) => {
-          //  const abbildung: Abbildung = {
-            //    id: undefined,
-              //  beschriftung: abbildungDTO.beschriftung,
-               // contentType: abbildungDTO.contentType,
-               // film: undefined,
-            //};
-            //return abbildung;
-       // });
+        const schauspielers = filmDTO.schauspielers.map((schauspielerDTO) => {
+            const schauspieler: Schauspieler = {
+                id: undefined,
+                vorname: schauspielerDTO.vorname,
+                nachname: schauspielerDTO.nachname,
+                geschlecht: schauspielerDTO.geschlecht,
+                email: schauspielerDTO.email,
+                telefonnummer: schauspielerDTO.telefonnummer,
+                film: undefined,
+            };
+            return schauspieler;
+        });
         const film: Film = {
             id: undefined,
             version: undefined,
             rating: filmDTO.rating,
             filmstart: filmDTO.filmstart,
             dauer: filmDTO.dauer,
-            sprache: undefined,
-            direktor: undefined,
-            genres: undefined,
-            titel: undefined,
-            schauspielers: undefined,
-
-            //preis: filmDTO.preis,
-            //rabatt: filmDTO.rabatt,
-            //lieferbar: filmDTO.lieferbar,
-            //datum: filmDTO.datum,
-            //homepage: filmDTO.homepage,
-            //schlagwoerter: filmDTO.schlagwoerter,
-            //titel,
-            //abbildungen,
-            //erzeugt: undefined,
-            //aktualisiert: undefined,
+            sprache: filmDTO.sprache,
+            direktor: filmDTO.direktor,
+            genres: filmDTO.genres,
+            titel,
+            schauspielers,
+            erzeugt: undefined,
+            aktualisiert: undefined,
         };
 
         // Rueckwaertsverweis
