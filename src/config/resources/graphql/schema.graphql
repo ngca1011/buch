@@ -90,7 +90,7 @@ input FilmInput {
   dauer: Int
   sprache: String
   direktor: String
-  genre: [String]
+  genres: [String]
   titel: TitelInput
   schauspielers: [SchauspielerInput]
 }

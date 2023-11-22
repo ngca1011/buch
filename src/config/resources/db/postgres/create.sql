@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS film (
 CREATE TABLE IF NOT EXISTS titel (
     id              integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE filmspace,
     titel           varchar(40) NOT NULL,
-    originalititel  varchar(40),
+    originaltitel  varchar(40),
     serienname      varchar(40),
     film_id         integer NOT NULL UNIQUE USING INDEX TABLESPACE filmspace REFERENCES film
 ) TABLESPACE filmspace;

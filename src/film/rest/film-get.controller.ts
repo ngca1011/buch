@@ -111,7 +111,7 @@ export class FilmQuery implements Suchkriterien {
     declare readonly rating: number;
 
     @ApiProperty({ required: false })
-    declare readonly datum: string;
+    declare readonly filmstart: string;
 
     @ApiProperty({ required: false })
     declare readonly dauer: number;
@@ -123,13 +123,13 @@ export class FilmQuery implements Suchkriterien {
     declare readonly direktor: string;
 
     @ApiProperty({ required: false })
-    declare readonly rabatt: number;
+    declare readonly action: string;
 
     @ApiProperty({ required: false })
-    declare readonly lieferbar: boolean;
+    declare readonly horror: string;
 
     @ApiProperty({ required: false })
-    declare readonly genres: string[];
+    declare readonly romance: string;
 
     @ApiProperty({ required: false })
     declare readonly titel: string;
