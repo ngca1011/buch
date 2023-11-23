@@ -69,10 +69,6 @@ export interface Links {
     readonly list?: Link;
     /** Optionaler Linke für add */
     readonly add?: Link;
-    /** Optionaler Linke für update */
-    readonly update?: Link;
-    /** Optionaler Linke für remove */
-    readonly remove?: Link;
 }
 
 /** Typedefinition für ein Titel-Objekt ohne Rückwärtsverweis zum Film */
@@ -294,8 +290,6 @@ export class FilmGetController {
                   self: { href: `${baseUri}/${id}` },
                   list: { href: `${baseUri}` },
                   add: { href: `${baseUri}` },
-                  update: { href: `${baseUri}/${id}` },
-                  remove: { href: `${baseUri}/${id}` },
               }
             : { self: { href: `${baseUri}/${id}` } };
 

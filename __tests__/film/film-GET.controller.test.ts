@@ -25,8 +25,8 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type FilmeModel } from '../../src/film/rest/buch-get.controller.js';
 import { type ErrorResponse } from './error-response.js';
+import { type FilmenModel } from '../../src/film/rest/film-get.controller.js';
 import { HttpStatus } from '@nestjs/common';
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ describe('GET /rest', () => {
         // given
 
         // when
-        const response: AxiosResponse<FilmeModel> = await client.get('/');
+        const response: AxiosResponse<FilmenModel> = await client.get('/');
 
         // then
         const { status, headers, data } = response;
@@ -73,9 +73,9 @@ describe('GET /rest', () => {
         expect(headers['content-type']).toMatch(/json/iu); // eslint-disable-line sonarjs/no-duplicate-string
         expect(data).toBeDefined();
 
-        const { filme } = data._embedded;
+        const { filmen } = data._embedded;
 
-        filme
+        filmen
             .map((film) => film._links.self.href)
             .forEach((selfLink) => {
                 // eslint-disable-next-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
@@ -88,7 +88,7 @@ describe('GET /rest', () => {
         const params = { titel: titelVorhanden };
 
         // when
-        const response: AxiosResponse<FilmeModel> = await client.get('/', {
+        const response: AxiosResponse<FilmenModel> = await client.get('/', {
             params,
         });
 
@@ -99,10 +99,10 @@ describe('GET /rest', () => {
         expect(headers['content-type']).toMatch(/json/iu);
         expect(data).toBeDefined();
 
-        const { filme } = data._embedded;
+        const { filmen } = data._embedded;
 
-        // Jedes Buch hat einen Titel mit dem Teilstring 'a'
-        filme
+        // Jedes Film hat einen Titel mit dem Teilstring 'a'
+        filmen
             .map((film) => film.titel)
             .forEach((titel) =>
                 expect(titel.titel.toLowerCase()).toEqual(
@@ -136,7 +136,7 @@ describe('GET /rest', () => {
         const params = { [genreVorhanden]: 'true' };
 
         // when
-        const response: AxiosResponse<FilmeModel> = await client.get('/', {
+        const response: AxiosResponse<FilmenModel> = await client.get('/', {
             params,
         });
 
@@ -148,10 +148,10 @@ describe('GET /rest', () => {
         // JSON-Array mit mind. 1 JSON-Objekt
         expect(data).toBeDefined();
 
-        const { filme } = data._embedded;
+        const { filmen } = data._embedded;
 
-        // Jedes Buch hat im Array der Schlagwoerter z.B. "javascript"
-        filme
+        // Jedes Film hat im Array der Genres z.B. "action"
+        filmen
             .map((film) => film.genres)
             .forEach((genres) =>
                 expect(genres).toEqual(
