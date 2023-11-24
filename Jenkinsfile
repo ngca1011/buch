@@ -24,7 +24,9 @@ pipeline {
     agent {
         docker {
             // https://www.debian.org/releases: Bookworm = Debian 12
-            image 'node:20.8.0-bookworm'
+            // https://deb.nodesource.com/node_20.x
+            // image 'node:21.2.0-bookworm'
+            image 'node:20.9.0-bookworm'
             // https://stackoverflow.com/questions/62330354/jenkins-pipeline-alpine-agent-apk-update-error-unable-to-lock-database-permis
             // https://stackoverflow.com/questions/42630894/jenkins-docker-how-to-control-docker-user-when-using-image-inside-command/51986870#51986870
             // https://stackoverflow.com/questions/42743201/npm-install-fails-in-jenkins-pipeline-in-docker
@@ -222,7 +224,7 @@ pipeline {
         stage('Docker Image bauen') {
             steps {
                 echo 'TODO: Docker-Image bauen und veroeffentlichen'
-                // sh 'docker buildx build --tag juergenzimmermann/film:2023.10.0 .'
+                // sh 'docker buildx build --tag juergenzimmermann/film:2024.04.0 .'
             }
         }
 
