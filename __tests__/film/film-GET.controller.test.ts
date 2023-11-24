@@ -64,7 +64,7 @@ describe('GET /rest', () => {
         // given
 
         // when
-        const response: AxiosResponse<FilmenModel> = await client.get('/');
+        const response: AxiosResponse<FilmenModel> = await client.get('');
 
         // then
         const { status, headers, data } = response;
@@ -79,7 +79,7 @@ describe('GET /rest', () => {
             .map((film) => film._links.self.href)
             .forEach((selfLink) => {
                 // eslint-disable-next-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
-                expect(selfLink).toMatch(new RegExp(`^${baseURL}`, 'u'));
+                expect(selfLink).toMatch(new RegExp(`^${baseURL}`, 'iu'));
             });
     });
 

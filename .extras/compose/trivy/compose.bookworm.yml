@@ -15,4 +15,4 @@
 
 services:
   trivy:
-    command: [image, juergenzimmermann/buch:2023.10.0-bookworm]
+    command: [image, juergenzimmermann/film:2023.10.0-bookworm]
