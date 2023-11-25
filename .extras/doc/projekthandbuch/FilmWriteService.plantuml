@@ -37,52 +37,48 @@ package mail {
   class MailService
 }
 
-package buch {
+package film {
   package entity {
-    class Buch
+    class Film
   }
 
   package service #DDDDDD {
-    class BuchInvalid
+    class FilmInvalid
     class TitelExists
-    class IsbnExists
     class VersionInvalid
     class VersionOutdated
 
-    class BuchWriteService << control >> <<@Injectable()>> {
-      + async create(buch: Buch): Promise<string|BuchInvalid|TitelExists|IsbnExists>
-      + async update(id: number, buch: Buch, version: string): Promise<number|BuchInvalid|TitelExists|IsbnExists|VersionInvalid|VersionOutdated>
-      + async delete(id: number): Promise<boolean>
+    class FilmWriteService << control >> <<@Injectable()>> {
+      + async create(film: Film): Promise<string|FilmInvalid|TitelExists|>
     }
 
-    BuchWriteService o--> "1" BuchValidationService: validationService
-    BuchWriteService o--> "1" BuchReadService: readService
-    BuchWriteService o--> "1" Repository: @InjectRepository repo
-    BuchWriteService o--> "1" MailService: mailService
+    FilmWriteService o--> "1" FilmValidationService: validationService
+    FilmWriteService o--> "1" FilmReadService: readService
+    FilmWriteService o--> "1" Repository: @InjectRepository repo
+    FilmWriteService o--> "1" MailService: mailService
 
-    BuchWriteService .up.> Injectable
-    BuchWriteService .up.> InjectRepository
+    FilmWriteService .up.> Injectable
+    FilmWriteService .up.> InjectRepository
 
-    BuchWriteService .up.> Promise
-    BuchWriteService ..> Buch
-    BuchWriteService .up.> BuchInvalid
-    BuchWriteService .up.> TitelExists
-    BuchWriteService .up.> IsbnExists
-    BuchWriteService .up.> VersionInvalid
-    BuchWriteService .up.> VersionOutdated
+    FilmWriteService .up.> Promise
+    FilmWriteService ..> Film
+    FilmWriteService .up.> FilmInvalid
+    FilmWriteService .up.> TitelExists
+    FilmWriteService .up.> VersionInvalid
+    FilmWriteService .up.> VersionOutdated
 
-    BuchInvalid .up[hidden].> Buch
-    Buch .up[hidden].> Promise
-    Buch .up[hidden].> Injectable
-    Buch .up[hidden].> InjectRepository
-    TitelExists .up[hidden].> Buch
-    BuchValidationService .[hidden].> Repository
-    BuchValidationService .[hidden].> MailService
+    FilmInvalid .up[hidden].> Film
+    Film .up[hidden].> Promise
+    Film .up[hidden].> Injectable
+    Film .up[hidden].> InjectRepository
+    TitelExists .up[hidden].> Film
+    FilmValidationService .[hidden].> Repository
+    FilmValidationService .[hidden].> MailService
   }
 }
 
 hide empty members
 
-footer (c) Jürgen Zimmermann
+footer (c) Gruppe 9
 
 @enduml

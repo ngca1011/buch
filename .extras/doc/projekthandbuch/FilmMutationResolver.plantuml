@@ -46,46 +46,46 @@ package security.auth {
   Roles .right.> Role
 }
 
-package buch #DDDDDD {
+package film #DDDDDD {
   package entity #FFFFFF {
-    class Buch <<entity>>
+    class Film <<entity>>
   }
 
   package service #FFFFFF {
-    class BuchWriteService << control >>
+    class FilmWriteService << control >>
   }
 
-  class "type BuchDTO = Omit<Buch, 'abbildungen' | 'aktualisiert' | 'erzeugt'" as BuchDTO
-  hide BuchDTO circle
+  class "type FilmDTO = Omit<Film, 'schauspielers' | 'aktualisiert' | 'erzeugt'" as FilmDTO
+  hide FilmDTO circle
 
     interface IdInput {
         id: number
     }
 
-  class BuchMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
-    + @Mutation() @Roles() async create(@Args() buchDTO: BuchDTO): Promise<number>
-    + @Mutation() @Roles() async update(@Args() buchDTO: BuchDTO): Promise<number>
+  class FilmMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
+    + @Mutation() @Roles() async create(@Args() filmDTO: FilmDTO): Promise<number>
+    + @Mutation() @Roles() async update(@Args() filmDTO: FilmDTO): Promise<number>
     + @Mutation() @Roles() async delete(@Args() id: IdInput): Promise<boolean>
   }
 
-  BuchMutationResolver o-down-> "1" BuchWriteService : service
+  FilmMutationResolver o-down-> "1" FilmWriteService : service
 
-  BuchMutationResolver ..> Buch
-  BuchMutationResolver ..> BuchDTO
-  BuchMutationResolver ..> IdInput
-  BuchDTO .up.> Buch
-  BuchMutationResolver ..> Promise
-  BuchMutationResolver ..> Resolver
+  FilmMutationResolver ..> Film
+  FilmMutationResolver ..> FilmDTO
+  FilmMutationResolver ..> IdInput
+  FilmDTO .up.> Film
+  FilmMutationResolver ..> Promise
+  FilmMutationResolver ..> Resolver
 
-  BuchMutationResolver .up.> Roles
-  BuchMutationResolver .up.> Role
+  FilmMutationResolver .up.> Roles
+  FilmMutationResolver .up.> Role
 
-  BuchDTO .[hidden].> Promise
-  BuchDTO .[hidden].> Resolver
+  FilmDTO .[hidden].> Promise
+  FilmDTO .[hidden].> Resolver
 }
 
 hide empty members
 
-footer (c) Juergen Zimmermann
+footer (c) Gruppe 9
 
 @enduml

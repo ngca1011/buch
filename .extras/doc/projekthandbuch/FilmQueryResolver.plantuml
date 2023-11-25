@@ -35,41 +35,41 @@ package @nestjs/graphql {
   Resolver .left[hidden].> Promise
 }
 
-package buch {
+package film {
   package entity {
-    class Buch <<entity>>
+    class Film <<entity>>
   }
 
   package service {
-    class BuchReadService << control >>
+    class FilmReadService << control >>
   }
 
   package graphql #DDDDDD {
-    class "type BuchDTO = Omit<Buch, 'abbildungen' | 'aktualisiert' | 'erzeugt'" as BuchDTO
-    hide BuchDTO circle
+    class "type FilmDTO = Omit<Film, 'schauspielers' | 'aktualisiert' | 'erzeugt'" as FilmDTO
+    hide FilmDTO circle
 
     interface IdInput {
         id: number
     }
 
-    class BuchQueryResolver << control >> << @Resolver() >> << @UseInterceptors() >> {
-      + @Query() async buch(@Args() id: IdInput): Promise<BuchDTO>
-      + @Query() async buecher(@Args() titel: string | undefined): Promise<BuchDTO[]>
+    class FilmQueryResolver << control >> << @Resolver() >> << @UseInterceptors() >> {
+      + @Query() async film(@Args() id: IdInput): Promise<FilmDTO>
+      + @Query() async filmen(@Args() titel: string | undefined): Promise<FilmDTO[]>
     }
 
-    BuchQueryResolver o-up-> "1" BuchReadService : service
-    BuchQueryResolver ..> BuchDTO
-    BuchQueryResolver ..> IdInput
-    BuchDTO ..> Buch
-    BuchQueryResolver ..> Resolver
+    FilmQueryResolver o-up-> "1" FilmReadService : service
+    FilmQueryResolver ..> FilmDTO
+    FilmQueryResolver ..> IdInput
+    FilmDTO ..> Film
+    FilmQueryResolver ..> Resolver
 
-    BuchQueryResolver ..> Promise
+    FilmQueryResolver ..> Promise
 
-    BuchDTO .[hidden].> Buch
-    Buch .[hidden].> Promise
-    BuchReadService .[hidden].> Promise
-    Buch .[hidden].> Resolver
-    BuchReadService .[hidden].> Resolver
+    FilmDTO .[hidden].> Film
+    Film .[hidden].> Promise
+    FilmReadService .[hidden].> Promise
+    Film .[hidden].> Resolver
+    FilmReadService .[hidden].> Resolver
   }
 }
 
