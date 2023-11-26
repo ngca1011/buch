@@ -16,13 +16,14 @@
 # Aufruf:   docker compose up
 
 services:
-  trivy:
-    image: owasp/dependency-check:8.4.2
+  dependency-Check:
+    #image: owasp/dependency-check:9.0.0
+    image: owasp/dependency-check:8.4.3
     command:
       - '--scan'
       - '/dependency-check/src'
       - '--format'
-      - 'ALL'
+      - 'HTML'
       - '--project'
       - 'film'
       - '--out'
