@@ -25,7 +25,7 @@ import process from 'node:process';
 
 // TODO: node --env-file .env
 // Umgebungsvariable aus .env einlesen
-dotenv.config();
+dotenv.config({ path: '.env.STUDENT' });
 
 const { NODE_ENV, LOG_DEFAULT, START_DB_SERVER } = process.env; // eslint-disable-line n/no-process-env
 
