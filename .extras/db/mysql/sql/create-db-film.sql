@@ -18,7 +18,7 @@
 --     docker compose up
 -- (1) 2. PowerShell:
 --     docker compose exec db bash
---         mysql --user=root --password=p < /sql/create-db-buch.sql
+--         mysql --user=root --password=p < /sql/create-db-film.sql
 --         exit
 --     docker compose down
 
