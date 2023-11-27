@@ -31,7 +31,7 @@ services:
     # /usr/sbin/mysqld --verbose --help
     # https://dev.mysql.com/doc/refman/8.0/en/using-encrypted-connections.html
     command:
-      - '--ssl-key=/var/lib/mysql-tls/key.pem'
+      - '--ssl-key=/var/lib/mysql-tls/private-key.pem'
       - '--ssl-cert=/var/lib/mysql-tls/certificate.cer'
       - '--ssl-ca=/var/lib/mysql-tls/certificate.cer'
     # https://dev.mysql.com/doc/refman/8.0/en/using-encrypted-connections.html
@@ -53,12 +53,12 @@ services:
         # SHOW VARIABLES LIKE "secure_file_priv";
         target: /var/lib/mysql-files
       - type: bind
-        source: C:/Zimmermann/volumes/mysql/tls/key.pem
-        target: /var/lib/mysql-tls/key.pem
+        source: C:/Zimmermann/volumes/mysql/tls/private-key.pem
+        target: /var/lib/mysql-tls/private-key.pem
         read_only: true
       - type: bind
-        source: C:/Zimmermann/volumes/mysql/tls/certificate.crt
-        target: /var/lib/mysql-tls/certificate.crt
+        source: C:/Zimmermann/volumes/mysql/tls/certificate.cer
+        target: /var/lib/mysql-tls/certificate.cer
         read_only: true
       - type: bind
         source: C:/Zimmermann/volumes/mysql/sql
