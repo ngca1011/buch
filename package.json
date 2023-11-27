@@ -95,7 +95,7 @@
     "@nestjs/passport": "10.0.2",
     "@nestjs/platform-express": "10.2.10",
     "@nestjs/swagger": "7.1.16",
-    "@nestjs/terminus": "10.1.1",
+    "@nestjs/terminus": "10.2.0",
     "@nestjs/typeorm": "10.0.1",
     "argon2": "0.31.2",
     "axios": "1.6.2",
@@ -197,8 +197,8 @@
     "ts-loader": "9.5.1",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
-    "typedoc": "0.25.3",
-    "typescript": "5.2.2",
+    "typedoc": "0.25.4",
+    "typescript": "5.3.2",
     "unified": "11.0.4",
     "weak-napi": "2.0.2"
   }
