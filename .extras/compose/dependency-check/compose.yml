@@ -17,19 +17,50 @@
 
 services:
   dependency-Check:
-    #image: owasp/dependency-check:9.0.0
-    image: owasp/dependency-check:8.4.3
+    image: owasp/dependency-check:9.0.2
+    # https://github.com/jeremylong/DependencyCheck/blob/main/cli/src/site/markdown/arguments.md
+    # NVD = National Vulnerability Database
+    # NIST = National Institute of Standards and Technology
+    # https://nvd.nist.gov/developers/request-an-api-key
     command:
-      - '--scan'
-      - '/dependency-check/src'
-      - '--format'
-      - 'HTML'
-      - '--project'
-      - 'film'
-      - '--out'
-      - '/dependency-check/report'
-      - '--suppression'
-      - '/dependency-check/suppression.xml'
+      - --nvdApiKey
+      - 47fbc0a4-9240-4fda-9a26-d7d5624c16bf
+      - --project
+      - film
+      - --scan
+      - /dependency-check/src
+      - --out
+      - /dependency-check/report
+      - --suppression
+      - /dependency-check/suppression.xml
+      - --disablePyDist
+      - --disablePyPkg
+      - --disableMSBuild
+      - --disableYarnAudit
+      - --disablePnpmAudit
+      - --nodeAuditSkipDevDependencies
+      - --nodePackageSkipDevDependencies
+      - --disableRubygems
+      - --disableBundleAudit
+      - --disableCocoapodsAnalyzer
+      - --disableSwiftPackageManagerAnalyze
+      - --disableSwiftPackageResolvedAnalyzer
+      - --disableAutoconf
+      - --disableCmake
+      - --disableArchive
+      - --disableJar
+      - --disableComposer
+      - --disableCpan
+      - --disableDart
+      - --disableCentral
+      - --disableCentralCache
+      - --disableNuspec
+      - --disableNugetconf
+      - --disableAssembly
+      - --disableGolangDep
+      - --disableGolangMod
+      - --disableMixAudit
+      - --disablePoetry
     volumes:
       - type: bind
         source: ../../..

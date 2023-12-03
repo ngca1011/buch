@@ -24,6 +24,7 @@ src/config/resources/tls/private-key.pem
 Dockerfile*
 Jenkinsfile
 jest.config.ts
+jest.config.js
 ToDo.md
 typedoc.cjs
 Zusammenfassung.md

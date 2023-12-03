@@ -15,11 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import fs from 'node:fs';
-import fsExtra from 'fs-extra';
 import path from 'node:path';
 
-const { existsSync, mkdirSync } = fs;
-const { copySync } = fsExtra;
+const { cpSync, existsSync, mkdirSync } = fs;
 const { join } = path
 
 // BEACHTE: "assets" innerhalb von nest-cli.json werden bei "--watch" NICHT beruecksichtigt
@@ -35,4 +33,4 @@ if (!existsSync(dist)) {
 const resourcesSrc = join(src, 'config', 'resources');
 const resourcesDist = join(dist, src, 'config', 'resources');
 mkdirSync(resourcesDist, { recursive: true });
-copySync(resourcesSrc, resourcesDist);
+cpSync(resourcesSrc, resourcesDist, { recursive: true });

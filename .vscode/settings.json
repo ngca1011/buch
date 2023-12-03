@@ -21,5 +21,8 @@
     "titleBar.inactiveBackground": "#21573299",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#215732"
+  "peacock.color": "#215732",
+  "asciidoc.extensions.enableKroki": true,
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://www.plantuml.com/plantuml"
 }
